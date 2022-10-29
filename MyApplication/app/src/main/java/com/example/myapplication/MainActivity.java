@@ -8,8 +8,11 @@ import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeechService;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,12 +29,17 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Locale;
+
+import static android.speech.tts.TextToSpeech.ERROR;
 
 public class MainActivity extends AppCompatActivity {
     TextView result,confidence;
     ImageView imageView;
     Button picture;
     int imageSize=224;
+    TextToSpeech tts;
+    Button text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,23 @@ public class MainActivity extends AppCompatActivity {
                     //Request camera permission if we don't have it.
                     requestPermissions(new String[]{Manifest.permission.CAMERA},100);
                 }
+            }
+        });
+        text = (Button) findViewById(R.id.text);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i != ERROR){
+                    tts.setLanguage(Locale.KOREAN);
+                }
+            }
+        });
+        text.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                tts.speak(result.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
             }
         });
     }
@@ -95,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            String[] classes={"toretta","coca","bongbong","tropicana","monster","welchs"};
+            String[] classes={"토레타","코카","봉봉","트로피카나","몬스터","웰치스"};
 
             result.setText(classes[maxPos]);
 
@@ -110,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             // TODO Handle the exception
         }
+
     }
 
 
