@@ -1,12 +1,15 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.AudioManager;
 import android.media.ExifInterface;
+import android.media.SoundPool;
 import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.speech.tts.TextToSpeechService;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,10 +45,14 @@ import static android.speech.tts.TextToSpeech.ERROR;
 public class MainActivity extends AppCompatActivity {
     TextView result,confidence;
     ImageView imageView;
-    Button picture;
+    ImageButton picture;
     int imageSize=224;
+
+    public SoundPool soundPool;
+    int soundID;
+
     TextToSpeech tts;
-    Button text;
+    ImageButton text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +62,19 @@ public class MainActivity extends AppCompatActivity {
         result = findViewById(R.id.result);
         confidence=findViewById(R.id.confidence);
         imageView=findViewById(R.id.imageView);
-        picture=findViewById(R.id.button);
+
+        picture= findViewById(R.id.button);
+
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);    //작성
+        soundID = soundPool.load(this, R.raw.soundbt, 1);
 
         picture.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public  void onClick(View view){
                 //Launch camera if we have permission
+                picture.setBackgroundResource(R.drawable.button_shape);
+                soundPool.play(soundID,1f,1f,0,0,1f);
                 if(checkSelfPermission(Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent,1);
@@ -70,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        text = (Button) findViewById(R.id.text);
+
+        text = (ImageButton) findViewById(R.id.text);
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -80,14 +95,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        text.setOnClickListener(new View.OnClickListener(){
 
+        text.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                text.setBackgroundResource(R.drawable.button_shape);
                 tts.speak(result.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+
             }
         });
     }
+
     public void classifyImage(Bitmap image){
         try {
             ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
@@ -125,13 +143,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            String[] classes={"토레타","코카","봉봉","트로피카나","몬스터","웰치스"};
+            String[] classes={"코코팜","데미소다","칠성사이다","펩시","이프로","토레타","코카콜라","포도봉봉","몬스터옐로우","웰치스","트로피카나","몬스터그린"};
 
             result.setText(classes[maxPos]);
 
             String s = "";
             for(int i=0;i<classes.length;i++){
-                s += String.format("%s: %.1f%%\n",classes[i],confidences[i]*100);
+                s = s + String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
+
             }
             confidence.setText(s);
 
@@ -140,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             // TODO Handle the exception
         }
-
     }
+
     public Bitmap rotateImage(Bitmap src, float degree){
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
@@ -159,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             image=Bitmap.createScaledBitmap(image,imageSize,imageSize,false);
             classifyImage(image);
         }
-        super.onActivityResult(requestCode, resultCode, data);
 
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
