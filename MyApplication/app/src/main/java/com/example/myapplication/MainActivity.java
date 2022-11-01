@@ -2,8 +2,11 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +27,10 @@ import com.example.myapplication.ml.ModelUnquant;
 import com.example.myapplication.ml.ModelUnquant;
 
 import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.schema.MaximumMinimumOptions;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -137,20 +142,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
+    public Bitmap rotateImage(Bitmap src, float degree){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(src,0,0,src.getWidth(),src.getHeight(),matrix,true);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode==1&&resultCode==RESULT_OK){
             Bitmap image = (Bitmap) data.getExtras().get("data");
             int dimension=Math.min(image.getWidth(),image.getHeight());
             image= ThumbnailUtils.extractThumbnail(image,dimension,dimension);
+            image = rotateImage(image,-90);
             imageView.setImageBitmap(image);
 
             image=Bitmap.createScaledBitmap(image,imageSize,imageSize,false);
             classifyImage(image);
         }
-
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 }
