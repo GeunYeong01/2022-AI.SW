@@ -21,21 +21,21 @@
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/ConfidencesText"
+        android:id="@+id/kind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="신뢰도"
+        android:layout_marginTop="144dp"
+        android:text="음료의 종류"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/confidence2"
+        android:id="@+id/kindText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ConfidencesText"
+        android:layout_below="@+id/kind"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_marginTop="30sp"
@@ -44,6 +44,29 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/taste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kindText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="음료의 맛"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tasteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/taste"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="30sp"
+        android:text=""
+        android:textColor="#3A4CA8"
+        android:textSize="25sp"
+        android:textStyle="bold" />
     <Button
         android:id="@+id/mainbtn"
         android:layout_width="411dp"
@@ -56,5 +79,26 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
+    <ImageButton
+        android:id="@+id/text2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/kind"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="39dp"
+        android:padding="0dp"
+        android:src="@drawable/micbutton" />
+
+    <ImageButton
+        android:id="@+id/text3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/taste"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-4dp"
+        android:layout_marginRight="37dp"
+        android:padding="0dp"
+        android:src="@drawable/micbutton" />
 
 </RelativeLayout>

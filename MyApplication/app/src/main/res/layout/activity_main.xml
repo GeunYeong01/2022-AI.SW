@@ -87,20 +87,40 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ConfidencesText"
         android:layout_centerHorizontal="true"
-        android:visibility="invisible"
         android:text=""
         android:textColor="#000"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
+    <TextView
+        android:id="@+id/kindmain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/confidence"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/tastemain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kindmain"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
     <Button
         android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ConfidencesText"
         android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
-        android:text="신뢰도 CHECK" />
+        android:layout_marginTop="49dp"
+        android:text="음료 더알아보기" />
 
 </RelativeLayout>

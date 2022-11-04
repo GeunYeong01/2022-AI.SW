@@ -39,6 +39,7 @@ import static android.speech.tts.TextToSpeech.ERROR;
 public class MainActivity extends AppCompatActivity {
     TextView result;
     TextView confidence;
+    TextView kindmain,tastemain;
     ImageView imageView;
     ImageButton picture;
     int imageSize=224;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
         picture= findViewById(R.id.button);
 
+        tastemain=findViewById(R.id.tastemain);
+        kindmain=findViewById(R.id.kindmain);
+
         btn1=findViewById(R.id.btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -68,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("신뢰도",confidence.getText().toString());
+                intent.putExtra("음료의 종류",kindmain.getText().toString());
+                intent.putExtra("음료의 맛",tastemain.getText().toString());
                 startActivity(intent);
             }
         });
@@ -150,15 +156,56 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String[] classes={"코코팜","데미소다","칠성사이다","펩시","이프로","토레타","코카콜라","포도봉봉","몬스터옐로우","웰치스","트로피카나","몬스터그린"};
-
+            String[] kind={"혼합음료","탄산음료","이온음료","과채음료"};
+            String[] taste={"포도맛","복숭아맛","콜라맛","사이다맛","사과맛"};
             result.setText(classes[maxPos]);
 
-           String s = "";
-            for(int i=0;i<classes.length;i++){
-                s = s + String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
-
-            }
+            String s = "";
+            s = s + String.format("%s: %.1f%%\n", classes[maxPos], confidences[maxPos] * 100);
             confidence.setText(s);
+            switch(maxPos){
+                case 0: case 11:
+                    kindmain.setText(kind[0]);
+                    tastemain.setText(taste[0]);
+                    break;
+                case 1:
+                    kindmain.setText(kind[1]);
+                    tastemain.setText(taste[0]);
+                    break;
+                case 2:
+                    kindmain.setText(kind[1]);
+                    tastemain.setText(taste[3]);
+                    break;
+                case 3:
+                    kindmain.setText(kind[1]);
+                    tastemain.setText(taste[2]);
+                    break;
+                case 4:
+                    kindmain.setText(kind[2]);
+                    tastemain.setText(taste[1]);
+                    break;
+                case 5:
+                    kindmain.setText(kind[1]);
+                    tastemain.setText(taste[1]);
+                    break;
+                case 6: case9:
+                    kindmain.setText(kind[1]);
+                    tastemain.setText(taste[2]);
+                    break;
+                case 7:
+                    kindmain.setText(kind[3]);
+                    tastemain.setText(taste[0]);
+                    break;
+                case 8:
+                    kindmain.setText(kind[2]);
+                    tastemain.setText(taste[0]);
+                    break;
+                case 10:
+                    kindmain.setText(kind[3]);
+                    tastemain.setText(taste[1]);
+                    break;
+            }
+
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
