@@ -37,7 +37,8 @@ import java.util.Locale;
 import static android.speech.tts.TextToSpeech.ERROR;
 
 public class MainActivity extends AppCompatActivity {
-    TextView result,confidence;
+    TextView result;
+    TextView confidence;
     ImageView imageView;
     ImageButton picture;
     int imageSize=224;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
-                intent.putExtra("신뢰도", (Parcelable) confidence);
+                intent.putExtra("신뢰도",confidence.getText().toString());
                 startActivity(intent);
             }
         });
@@ -152,12 +153,12 @@ public class MainActivity extends AppCompatActivity {
 
             result.setText(classes[maxPos]);
 
-            /*String s = "";
+           String s = "";
             for(int i=0;i<classes.length;i++){
                 s = s + String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
 
             }
-            confidence.setText(s);*/
+            confidence.setText(s);
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {

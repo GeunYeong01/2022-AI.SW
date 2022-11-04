@@ -21,13 +21,16 @@ import java.io.IOException;
 
 public class SubActivity extends AppCompatActivity {
     Button mainbutton;
+    TextView confidence2;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subactivity_main);
-
         Intent intent = getIntent();
-        String data = intent.getStringExtra("신뢰도");
+        String confidence = intent.getStringExtra("신뢰도");
+
+        confidence2 = findViewById(R.id.confidence2);
+        confidence2.setText(confidence);
         mainbutton=findViewById(R.id.mainbtn);
         mainbutton.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
