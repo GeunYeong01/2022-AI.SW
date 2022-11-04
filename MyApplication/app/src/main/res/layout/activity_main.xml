@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="#2660F3"
+        android:background="#CCD2F0"
         android:gravity="center"
         android:text="캔 음료 구별하기"
-        android:textColor="#F1E6E6"
+        android:textColor="#5D6DBE"
         android:textSize="25sp"
         android:textStyle="bold"
         tools:visibility="visible" />
@@ -80,15 +80,13 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/confidence"
+
+    <Button
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ConfidencesText"
-        android:layout_centerHorizontal="true"
-        android:text=""
-        android:textColor="#000"
-        android:textSize="10sp"
-        android:textStyle="bold" />
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="450dp"
+        android:text="신뢰도 CHECK" />
 
 </RelativeLayout>

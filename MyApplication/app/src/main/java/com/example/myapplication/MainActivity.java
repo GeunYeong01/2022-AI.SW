@@ -1,24 +1,21 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.AudioManager;
-import android.media.ExifInterface;
 import android.media.SoundPool;
 import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeechService;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,13 +25,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.ml.ModelUnquant;
-import com.example.myapplication.ml.ModelUnquant;
 
 import org.tensorflow.lite.DataType;
-import org.tensorflow.lite.schema.MaximumMinimumOptions;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -53,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextToSpeech tts;
     ImageButton text;
+    Button btn1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
         imageView=findViewById(R.id.imageView);
 
         picture= findViewById(R.id.button);
+
+        btn1=findViewById(R.id.btn1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("신뢰도", (Parcelable) confidence);
+                startActivity(intent);
+            }
+        });
 
         soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);    //작성
         soundID = soundPool.load(this, R.raw.soundbt, 1);
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        text = (ImageButton) findViewById(R.id.text);
+        text =findViewById(R.id.text);
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -132,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             // Runs model inference and gets result.
             ModelUnquant.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
             float[] confidences = outputFeature0.getFloatArray();
             int maxPos = 0;
             float maxConfidence = 0;
@@ -147,13 +152,12 @@ public class MainActivity extends AppCompatActivity {
 
             result.setText(classes[maxPos]);
 
-            String s = "";
+            /*String s = "";
             for(int i=0;i<classes.length;i++){
                 s = s + String.format("%s: %.1f%%\n", classes[i], confidences[i] * 100);
 
             }
-            confidence.setText(s);
-
+            confidence.setText(s);*/
             // Releases model resources if no longer used.
             model.close();
         } catch (IOException e) {
