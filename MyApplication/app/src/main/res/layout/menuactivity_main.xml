@@ -3,8 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#DDECCA"
+    android:background="@color/white"
     tools:context=".menuActivity">
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="#DDECCA"
+        android:gravity="center"
+        android:text="캔 음료 구별하기"
+        android:textColor="#568A35"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/menumic"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="52dp"
+        android:background="@drawable/button_shape"
+        android:padding="0dp"
+        android:src="@drawable/menumic" />
 
     <ImageButton
         android:id="@+id/mainbutton"
