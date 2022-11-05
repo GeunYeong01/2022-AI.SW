@@ -30,7 +30,9 @@
         <activity android:name=".SubActivity"
             android:exported="true">
         </activity>
-
+        <activity android:name=".menuActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

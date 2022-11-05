@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="#CCD2F0"
+        android:background="#DDECCA"
         android:gravity="center"
         android:text="캔 음료 구별하기"
-        android:textColor="#5D6DBE"
+        android:textColor="#568A35"
         android:textSize="25sp"
         android:textStyle="bold"
         tools:visibility="visible" />
@@ -67,6 +67,7 @@
         android:textColor="#3A4CA8"
         android:textSize="25sp"
         android:textStyle="bold" />
+
     <Button
         android:id="@+id/mainbtn"
         android:layout_width="411dp"
@@ -74,8 +75,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="0dp"
+        android:background="#DDECCA"
         android:padding="0dp"
         android:text="메인으로 돌아가기"
+        android:textColor="#568A35"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -86,7 +89,8 @@
         android:layout_below="@+id/kind"
         android:layout_alignParentRight="true"
         android:layout_marginTop="1dp"
-        android:layout_marginRight="39dp"
+        android:layout_marginRight="70dp"
+        android:background="@drawable/button_shape"
         android:padding="0dp"
         android:src="@drawable/micbutton" />
 
@@ -96,8 +100,9 @@
         android:layout_height="50dp"
         android:layout_below="@+id/taste"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-4dp"
-        android:layout_marginRight="37dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="71dp"
+        android:background="@drawable/button_shape"
         android:padding="0dp"
         android:src="@drawable/micbutton" />
 
