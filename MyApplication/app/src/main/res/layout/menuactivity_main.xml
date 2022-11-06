@@ -6,18 +6,15 @@
     android:background="@color/white"
     tools:context=".menuActivity">
 
-    <TextView
+    <ImageButton
         android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="415dp"
+        android:layout_height="35dp"
         android:layout_centerHorizontal="true"
         android:background="#DDECCA"
         android:gravity="center"
-        android:text="캔 음료 구별하기"
-        android:textColor="#568A35"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        android:src="@drawable/candi"/>
 
     <ImageButton
         android:id="@+id/menumic"
@@ -33,7 +30,7 @@
 
     <ImageButton
         android:id="@+id/mainbutton"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

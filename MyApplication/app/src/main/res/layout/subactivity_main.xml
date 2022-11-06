@@ -3,33 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SubActivity"
     android:orientation="horizontal">
 
 
-    <TextView
+    <ImageButton
         android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="415dp"
+        android:layout_height="35dp"
         android:layout_centerHorizontal="true"
         android:background="#DDECCA"
         android:gravity="center"
-        android:text="캔 음료 구별하기"
-        android:textColor="#568A35"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        android:src="@drawable/candi"/>
 
-    <TextView
+    <ImageButton
         android:id="@+id/kind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/textview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="144dp"
-        android:text="음료의 종류"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:src="@drawable/kind" />
 
     <TextView
         android:id="@+id/kindText"
@@ -44,16 +40,14 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <TextView
+    <ImageButton
         android:id="@+id/taste"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/kindText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:text="음료의 맛"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:src="@drawable/taste" />
 
     <TextView
         android:id="@+id/tasteText"
@@ -68,19 +62,16 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <Button
+    <ImageButton
         android:id="@+id/mainbtn"
-        android:layout_width="411dp"
+        android:layout_width="415dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="0dp"
         android:background="#DDECCA"
         android:padding="0dp"
-        android:text="메인으로 돌아가기"
-        android:textColor="#568A35"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:src="@drawable/mainbtn" />
 
     <ImageButton
         android:id="@+id/text2"

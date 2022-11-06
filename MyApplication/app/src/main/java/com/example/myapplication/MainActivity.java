@@ -45,11 +45,12 @@ public class MainActivity extends AppCompatActivity {
     int imageSize=224;
 
     public SoundPool soundPool;
-    int soundID;
+    int soundID, soundID2, soundID3;
 
     TextToSpeech tts;
     ImageButton text;
-    Button btn1;
+    ImageButton btn1;
+    ImageButton classified;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +62,23 @@ public class MainActivity extends AppCompatActivity {
         imageView=findViewById(R.id.imageView);
 
         picture= findViewById(R.id.button);
-
+        classified=findViewById(R.id.classified);
         tastemain=findViewById(R.id.tastemain);
         kindmain=findViewById(R.id.kindmain);
+
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);    //작성
+        soundID = soundPool.load(this, R.raw.soundbt, 1);
+        soundID2 = soundPool.load(this, R.raw.candrink, 1);
+        soundID3 = soundPool.load(this, R.raw.moredrink, 1);
 
         btn1=findViewById(R.id.btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
+                btn1.setBackgroundResource(R.drawable.moredrink);
+                soundPool.play(soundID3,1f,1f,0,0,1f);
+
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("신뢰도",confidence.getText().toString());
                 intent.putExtra("음료의 종류",kindmain.getText().toString());
@@ -78,15 +87,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);    //작성
-        soundID = soundPool.load(this, R.raw.soundbt, 1);
-
+        classified.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                classified.setBackgroundResource(R.drawable.candrink);
+                soundPool.play(soundID2,1f,1f,0,0,1f);
+            }
+        });
         picture.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public  void onClick(View view){
                 //Launch camera if we have permission
-                picture.setBackgroundResource(R.drawable.button_shape);
+                picture.setBackgroundResource(R.drawable.take_picture);
                 soundPool.play(soundID,1f,1f,0,0,1f);
                 if(checkSelfPermission(Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
