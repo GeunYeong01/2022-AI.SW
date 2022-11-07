@@ -38,89 +38,90 @@ import java.util.Locale;
 import static android.speech.tts.TextToSpeech.ERROR;
 
 public class MainActivity extends AppCompatActivity {
-    TextView result;
-    TextView confidence;
-    TextView kindmain,tastemain;
-    ImageView imageView;
-    ImageButton picture;
-    int imageSize=224;
+    TextView result; //인식된 캔음료 이름
+    TextView confidence; //모델 신뢰도
+    TextView kindmain,tastemain; //음료의 종류, 음료의 맛 (SubActivity로 넘겨주기 위함)
+    ImageView imageView; // 캔음료 이미지
+    ImageButton picture; // 사진찍기 버튼
+    int imageSize=224; //이미지 사이즈
 
-    public SoundPool soundPool;
-    int soundID, soundID2, soundID3;
+    public SoundPool soundPool; // 사운드 생성자 
+    int soundID, soundID2, soundID3; // 사운드변수지정
 
-    TextToSpeech tts;
-    ImageButton text;
-    ImageButton btn1;
-    ImageButton classified;
+    TextToSpeech tts; // tts 생성자
+    ImageButton text; //캔음료 읽어주는 마이크버튼
+    ImageButton btn1; //SubActivity로 넘어가는 버튼
+    ImageButton classified; // "캔 음료" 읽어주는 버튼
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        result = findViewById(R.id.result);
+        result = findViewById(R.id.result); // 레이아웃과 연결
         confidence=findViewById(R.id.confidence);
         imageView=findViewById(R.id.imageView);
-
         picture= findViewById(R.id.button);
         classified=findViewById(R.id.classified);
         tastemain=findViewById(R.id.tastemain);
         kindmain=findViewById(R.id.kindmain);
-
-        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);    //작성
-        soundID = soundPool.load(this, R.raw.soundbt, 1);
-        soundID2 = soundPool.load(this, R.raw.candrink, 1);
-        soundID3 = soundPool.load(this, R.raw.moredrink, 1);
-
         btn1=findViewById(R.id.btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        text =findViewById(R.id.text);
+
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0); // 사운드 객체 생성
+        soundID = soundPool.load(this, R.raw.soundbt, 1); //Take Picture
+        soundID2 = soundPool.load(this, R.raw.candrink, 1); // 캔 음료
+        soundID3 = soundPool.load(this, R.raw.moredrink, 1); // 음료 더 알아보기
+
+        picture.setOnClickListener(new View.OnClickListener(){ // 사진버튼 리스너 달아주기
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onClick(View view) {
-                btn1.setBackgroundResource(R.drawable.moredrink);
-                soundPool.play(soundID3,1f,1f,0,0,1f);
-
-                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
-                intent.putExtra("신뢰도",confidence.getText().toString());
-                intent.putExtra("음료의 종류",kindmain.getText().toString());
-                intent.putExtra("음료의 맛",tastemain.getText().toString());
-                startActivity(intent);
+            public  void onClick(View view){ //클릭했을때
+                //카메라 권한 부여
+                if(checkSelfPermission(Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent,1);
+                }else{
+                    //카메라 권한 부여 안 함
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},100);
+                }
+                //사운드 설정
+                picture.setBackgroundResource(R.drawable.take_picture);
+                soundPool.play(soundID,1f,1f,0,0,1f);
             }
         });
 
         classified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //사운드 설정
                 classified.setBackgroundResource(R.drawable.candrink);
                 soundPool.play(soundID2,1f,1f,0,0,1f);
             }
         });
-        picture.setOnClickListener(new View.OnClickListener(){
+
+        btn1.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public  void onClick(View view){
-                //Launch camera if we have permission
-                picture.setBackgroundResource(R.drawable.take_picture);
-                soundPool.play(soundID,1f,1f,0,0,1f);
-                if(checkSelfPermission(Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent,1);
-                }else{
-                    //Request camera permission if we don't have it.
-                    requestPermissions(new String[]{Manifest.permission.CAMERA},100);
-                }
+            public void onClick(View view) {
+                //사운드 설정
+                btn1.setBackgroundResource(R.drawable.moredrink);
+                soundPool.play(soundID3,1f,1f,0,0,1f);
+                //SubActivity로 데이터 넘겨주기
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("음료의 종류",kindmain.getText().toString());
+                intent.putExtra("음료의 맛",tastemain.getText().toString());
+                startActivity(intent); // SubActivity 실행
             }
         });
 
-        text =findViewById(R.id.text);
-
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() { //TTS 객체 생성
             @Override
             public void onInit(int i) {
                 if(i != ERROR){
-                    tts.setPitch((float) 0.6);
-                    tts.setSpeechRate((float) 0.8);
-                    tts.setLanguage(Locale.KOREAN);
+                    tts.setPitch((float) 0.6); //음성 톤 0.6배 내려주기
+                    tts.setSpeechRate((float) 0.8); // 읽는 속도 0.8배 빠르기로 설정
+                    tts.setLanguage(Locale.KOREAN); //언어선택
                 }
             }
         });
@@ -128,26 +129,26 @@ public class MainActivity extends AppCompatActivity {
         text.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                text.setBackgroundResource(R.drawable.button_shape);
-                tts.speak(result.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+                text.setBackgroundResource(R.drawable.button_shape); //버튼 모양 설정
+                tts.speak(result.getText().toString(),TextToSpeech.QUEUE_FLUSH,null); //result 읽어주기
 
             }
         });
     }
 
-    public void classifyImage(Bitmap image){
+    public void classifyImage(Bitmap image){ //이미지 구별하기
         try {
+            // 모델을 생성하고 애플리케이션 컨텍스트 가져옴
             ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-            // Creates inputs for reference.
+            //모델에 대한 입력
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+            //모델에 전달 할 수 있는 바이트 버퍼 생성
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize *3);
             byteBuffer.order(ByteOrder.nativeOrder());
-
-            int [] intValues = new int[imageSize*imageSize];
+            int [] intValues = new int[imageSize*imageSize]; //비트맵 이미지에서 픽셀 값 가져오기
             image.getPixels(intValues,0,image.getWidth(),0,0,image.getWidth(),image.getHeight());
             int pixel=0;
-            for(int i =0; i<imageSize;i++){
+            for(int i =0; i<imageSize;i++){ //배열을 통해 반복하고 해당 픽셀 값을 바이트 버퍼에 추가하여 변수를 갖도록 함
                 for(int j=0;j<imageSize;j++){
                     int val=intValues[pixel++]; //RGB
                     byteBuffer.putFloat(((val>>16)&0xFF)*(1.f/255.f));
@@ -155,19 +156,17 @@ public class MainActivity extends AppCompatActivity {
                     byteBuffer.putFloat((val&0xFF)*(1.f/255.f));
                 }
             }
-
             inputFeature0.loadBuffer(byteBuffer);
-
-            // Runs model inference and gets result.
+            // 모델 결과값 (모델 추론 실행)
             ModelUnquant.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-            float[] confidences = outputFeature0.getFloatArray();
+            float[] confidences = outputFeature0.getFloatArray();//신뢰도 결과값 가져오기
             int maxPos = 0;
             float maxConfidence = 0;
             for(int i = 0; i<confidences.length;i++){
                 if(confidences[i]>maxConfidence){
                     maxConfidence=confidences[i];
-                    maxPos=i;
+                    maxPos=i; // 신뢰도가 가장 큰 인덱스 받기
                 }
             }
 
@@ -225,22 +224,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Bitmap rotateImage(Bitmap src, float degree){
+    public Bitmap rotateImage(Bitmap src, float degree){ // 이미지가 회전되어 나올때 돌리는 함수
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         return Bitmap.createBitmap(src,0,0,src.getWidth(),src.getHeight(),matrix,true);
     }
-    @Override
+
+    @Override //카메라 시작 후 인텐트를 사용하여 이미지라는 비트맵 가져오기
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode==1&&resultCode==RESULT_OK){
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            int dimension=Math.min(image.getWidth(),image.getHeight());
-            image= ThumbnailUtils.extractThumbnail(image,dimension,dimension);
-            image = rotateImage(image,0);
-            imageView.setImageBitmap(image);
+            Bitmap image = (Bitmap) data.getExtras().get("data"); // 비트맵 데이터 설정
+            int dimension=Math.min(image.getWidth(),image.getHeight()); // 신경망에 정사각형 이미지 공급
+            image= ThumbnailUtils.extractThumbnail(image,dimension,dimension); // 축소판 추출(일부 축소판 유틸리티 사용)
+            image = rotateImage(image,-90); // 이미지가 회전될 때 사용
+            imageView.setImageBitmap(image);// imageView에 가져온 image 넣기
 
             image=Bitmap.createScaledBitmap(image,imageSize,imageSize,false);
-            classifyImage(image);
+            classifyImage(image); //이미지 비트맵 전달
         }
 
         super.onActivityResult(requestCode, resultCode, data);
