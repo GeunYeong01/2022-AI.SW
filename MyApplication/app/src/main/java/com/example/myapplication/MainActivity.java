@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInit(int i) {
                 if(i != ERROR){
+                    tts.setPitch((float) 0.6);
+                    tts.setSpeechRate((float) 0.8);
                     tts.setLanguage(Locale.KOREAN);
                 }
             }
@@ -171,26 +173,26 @@ public class MainActivity extends AppCompatActivity {
 
             String[] classes={"코코팜","데미소다","칠성사이다","펩시","이프로","토레타","코카콜라","포도봉봉","몬스터옐로우","웰치스","트로피카나","몬스터그린"};
             String[] kind={"혼합음료","탄산음료","이온음료","과채음료"};
-            String[] taste={"포도맛","복숭아맛","콜라맛","사이다맛","사과맛"};
+            String[] taste={"포도맛","복숭아맛","콜라맛","사이다맛","사과맛","레몬맛"};
             result.setText(classes[maxPos]);
 
             String s = "";
             s = s + String.format("%s: %.1f%%\n", classes[maxPos], confidences[maxPos] * 100);
             confidence.setText(s);
             switch(maxPos){
-                case 0: case 11:
+                case 0:
                     kindmain.setText(kind[0]);
                     tastemain.setText(taste[0]);
                     break;
-                case 1:
+                case 1: case 5: case 11:
                     kindmain.setText(kind[1]);
-                    tastemain.setText(taste[0]);
+                    tastemain.setText(taste[4]);
                     break;
                 case 2:
                     kindmain.setText(kind[1]);
                     tastemain.setText(taste[3]);
                     break;
-                case 3:
+                case 3: case 6:
                     kindmain.setText(kind[1]);
                     tastemain.setText(taste[2]);
                     break;
@@ -198,24 +200,20 @@ public class MainActivity extends AppCompatActivity {
                     kindmain.setText(kind[2]);
                     tastemain.setText(taste[1]);
                     break;
-                case 5:
-                    kindmain.setText(kind[1]);
-                    tastemain.setText(taste[1]);
-                    break;
-                case 6: case9:
-                    kindmain.setText(kind[1]);
-                    tastemain.setText(taste[2]);
-                    break;
                 case 7:
                     kindmain.setText(kind[3]);
                     tastemain.setText(taste[0]);
                     break;
                 case 8:
-                    kindmain.setText(kind[2]);
+                    kindmain.setText(kind[1]);
+                    tastemain.setText(taste[5]);
+                    break;
+                case 9:
+                    kindmain.setText(kind[1]);
                     tastemain.setText(taste[0]);
                     break;
                 case 10:
-                    kindmain.setText(kind[3]);
+                    kindmain.setText(kind[1]);
                     tastemain.setText(taste[1]);
                     break;
             }
@@ -238,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             int dimension=Math.min(image.getWidth(),image.getHeight());
             image= ThumbnailUtils.extractThumbnail(image,dimension,dimension);
-            image = rotateImage(image,-90);
+            image = rotateImage(image,0);
             imageView.setImageBitmap(image);
 
             image=Bitmap.createScaledBitmap(image,imageSize,imageSize,false);

@@ -22,8 +22,10 @@
         android:layout_height="300dp"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:layout_marginRight="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="49dp"
         android:background="@drawable/button_shape"
         android:padding="0dp"
         android:src="@drawable/menumic" />
@@ -32,16 +34,19 @@
         android:id="@+id/txtInMsg"
         android:layout_width="345dp"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="460dp"
-        android:inputType="textPersonName" />
+        android:layout_marginBottom="200dp"
+        android:inputType="textPersonName"
+        android:visibility="invisible"/>
 
     <EditText
         android:id="@+id/txtSystem"
         android:layout_width="345dp"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="510dp"
+        android:layout_marginBottom="161dp"
         android:inputType="textPersonName" />
 
     <ImageButton
@@ -49,10 +54,10 @@
         android:layout_width="300dp"
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="92dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
         android:padding="0dp"
         android:soundEffectsEnabled="false"
-        android:src="@drawable/mainbutton"
-        android:layout_centerHorizontal="true"/>
+        android:src="@drawable/mainbutton" />
 
 </RelativeLayout>

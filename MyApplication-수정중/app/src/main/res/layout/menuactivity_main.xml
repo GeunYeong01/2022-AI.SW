@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    tools:context=".menuActivity">
+
+    <ImageButton
+        android:id="@+id/textview"
+        android:layout_width="415dp"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:background="#DDECCA"
+        android:gravity="center"
+        tools:visibility="visible"
+        android:src="@drawable/candi"/>
+
+    <ImageButton
+        android:id="@+id/menumic"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="52dp"
+        android:background="@drawable/button_shape"
+        android:padding="0dp"
+        android:src="@drawable/menumic" />
+
+    <EditText
+        android:id="@+id/tvVoice"
+        android:layout_width="345dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="460dp"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/txtSystem"
+        android:layout_width="345dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="510dp"
+        android:inputType="textPersonName" />
+
+    <ImageButton
+        android:id="@+id/mainbutton"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="92dp"
+        android:padding="0dp"
+        android:soundEffectsEnabled="false"
+        android:src="@drawable/mainbutton"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

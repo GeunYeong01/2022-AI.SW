@@ -11,11 +11,10 @@
         android:id="@+id/textview"
         android:layout_width="415dp"
         android:layout_height="35dp"
-        android:layout_centerHorizontal="true"
         android:background="#DDECCA"
         android:gravity="center"
-        tools:visibility="visible"
-        android:src="@drawable/candi"/>
+        android:src="@drawable/candi"
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/text"
@@ -24,7 +23,7 @@
         android:layout_below="@+id/imageView"
         android:layout_alignParentRight="true"
         android:layout_marginTop="28dp"
-        android:layout_marginRight="61dp"
+        android:layout_marginRight="40dp"
         android:background="@drawable/button_shape"
         android:padding="0dp"
         android:src="@drawable/micbutton" />
@@ -42,8 +41,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="352dp"
-        android:layout_height="379dp"
+        android:layout_width="282dp"
+        android:layout_height="286dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35sp" />
 
@@ -70,8 +69,8 @@
 
     <ImageButton
         android:id="@+id/ConfidencesText"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/result"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"

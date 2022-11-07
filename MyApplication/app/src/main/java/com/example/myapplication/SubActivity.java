@@ -77,6 +77,8 @@ public class SubActivity extends AppCompatActivity {
             @Override
             public void onInit(int i) {
                 if(i != ERROR){
+                    tts.setPitch((float) 0.6);
+                    tts.setSpeechRate((float) 0.8);
                     tts.setLanguage(Locale.KOREAN);
                 }
             }
